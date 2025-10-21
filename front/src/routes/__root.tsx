@@ -10,7 +10,7 @@ function RootLayout() {
   const { theme, resolvedTheme, toggle, setTheme } = useTheme();
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0b0f17] dark:text-slate-100">
+    <div className="min-h-screen text-slate-900 bg-gray-50 dark:bg-[#0b0f17] dark:text-slate-100">
       {/* 헤더 */}
       <header className="bg-white shadow dark:bg-[#0f1522] dark:shadow-black/20">
         <nav className="container mx-auto px-4 py-4">

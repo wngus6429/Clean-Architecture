@@ -87,11 +87,21 @@ function makeContent(stock?: { code: string; name: string }) {
   return body;
 }
 
+const SENTIMENTS = ["bullish", "neutral", "bearish"] as const;
+const POSITIONS = ["buy", "hold", "sell"] as const;
+
 async function seed({ count }: SeedOptions) {
   const values = Array.from({ length: count }).map(() => {
     const withStock = maybe(true, 0.7);
     const stock = withStock ? randomPick(STOCKS) : undefined;
     const created = randomPastDate(180);
+    const sentiment = randomPick(SENTIMENTS);
+    const positionType =
+      sentiment === "bullish" ? randomPick(["buy", "buy", "hold"]) : sentiment === "bearish" ? randomPick(["sell", "sell", "hold"]) : randomPick(["hold", "buy", "sell"]);
+    const entryPrice = stock ? randomInt(20_000, 120_000) : undefined;
+    const targetPrice = stock
+      ? Math.max(0, Math.round((entryPrice ?? 0) * randomPick([0.9, 1.05, 1.1, 1.2, 1.35])))
+      : undefined;
 
     return {
       title: makeTitle(stock),
@@ -99,6 +109,12 @@ async function seed({ count }: SeedOptions) {
       author: randomPick(AUTHORS),
       stockCode: stock?.code,
       stockName: stock?.name,
+      sentiment,
+      positionType,
+      entryPrice,
+      targetPrice,
+      viewCount: randomInt(0, 800),
+      likeCount: randomInt(0, 120),
       // createdAt/updatedAt을 DB default로 둘 수도 있지만, 정렬 테스트를 위해 명시 설정
       createdAt: created,
       updatedAt: created,

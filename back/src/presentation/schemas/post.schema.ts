@@ -3,6 +3,13 @@
 
 import { z } from "zod";
 
+const priceSchema = z
+  .number({ invalid_type_error: "가격은 숫자여야 합니다." })
+  .min(0, "가격은 0 이상이어야 합니다.")
+  .max(1_000_000_000, "가격이 너무 큽니다.")
+  .nullable()
+  .optional();
+
 /**
  * 게시글 생성 요청 스키마
  */
@@ -12,6 +19,10 @@ export const createPostSchema = z.object({
   author: z.string().min(1, "작성자는 필수입니다.").max(100, "작성자는 100자 이하여야 합니다."),
   stockCode: z.string().max(20).optional(),
   stockName: z.string().max(100).optional(),
+  sentiment: z.enum(["bullish", "neutral", "bearish"]).optional(),
+  positionType: z.enum(["buy", "hold", "sell"]).optional(),
+  entryPrice: priceSchema,
+  targetPrice: priceSchema,
 });
 
 /**
@@ -23,4 +34,8 @@ export const updatePostSchema = z.object({
   author: z.string().min(1).max(100).optional(),
   stockCode: z.string().max(20).optional(),
   stockName: z.string().max(100).optional(),
+  sentiment: z.enum(["bullish", "neutral", "bearish"]).optional(),
+  positionType: z.enum(["buy", "hold", "sell"]).optional(),
+  entryPrice: priceSchema,
+  targetPrice: priceSchema,
 });

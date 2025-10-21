@@ -29,8 +29,13 @@ function readStoredTheme(): Theme | null {
 function applyTheme(theme: Theme): "light" | "dark" {
   const resolved = theme === "system" ? getSystemTheme() : theme;
   const root = document.documentElement;
-  if (resolved === "dark") root.classList.add("dark");
-  else root.classList.remove("dark");
+  root.classList.remove("theme-light");
+  if (resolved === "dark") {
+    root.classList.add("dark");
+  } else {
+    root.classList.remove("dark");
+    root.classList.add("theme-light");
+  }
   (root.style as any).colorScheme = resolved;
   return resolved;
 }

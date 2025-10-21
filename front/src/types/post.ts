@@ -1,6 +1,9 @@
 // ===== API 타입 정의 =====
 // 백엔드 API 응답 구조를 정의
 
+export type Sentiment = "bullish" | "neutral" | "bearish";
+export type PositionType = "buy" | "hold" | "sell";
+
 /**
  * 게시글 타입
  */
@@ -11,6 +14,12 @@ export interface Post {
   author: string;
   stockCode?: string;
   stockName?: string;
+  sentiment: Sentiment;
+  positionType: PositionType;
+  entryPrice?: number | null;
+  targetPrice?: number | null;
+  viewCount: number;
+  likeCount: number;
   createdAt: string; // ISO 8601 문자열
   updatedAt: string;
 }
@@ -24,6 +33,10 @@ export interface CreatePostInput {
   author: string;
   stockCode?: string;
   stockName?: string;
+  sentiment?: Sentiment;
+  positionType?: PositionType;
+  entryPrice?: number | null;
+  targetPrice?: number | null;
 }
 
 /**
@@ -35,6 +48,24 @@ export interface UpdatePostInput {
   author?: string;
   stockCode?: string;
   stockName?: string;
+  sentiment?: Sentiment;
+  positionType?: PositionType;
+  entryPrice?: number | null;
+  targetPrice?: number | null;
+}
+
+/**
+ * 트렌딩 종목 정보
+ */
+export interface TrendingStock {
+  stockCode: string;
+  stockName?: string;
+  postCount: number;
+  bullishCount: number;
+  neutralCount: number;
+  bearishCount: number;
+  avgTargetPrice?: number | null;
+  lastPostedAt: string;
 }
 
 /**

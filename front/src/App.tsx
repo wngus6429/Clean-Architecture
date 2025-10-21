@@ -63,7 +63,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen relative dark:bg-[#0b0f17] dark:text-slate-100">
+    <div className="min-h-screen relative bg-slate-50 text-slate-900 dark:bg-[#0b0f17] dark:text-slate-100">
       {/* 전역 토스트 컨테이너 */}
       <ToastContainer />
 
@@ -77,8 +77,8 @@ function App() {
             >
               <div className="text-4xl">📈</div>
               <div>
-                <h1 className="text-2xl font-bold text-slate-800 dark:text-cyan-300 neon-cyan">주식 게시판</h1>
-                <p className="text-xs text-gray-500 dark:text-slate-400">Stock Discussion Board</p>
+                <h1 className="text-2xl font-bold text-slate-900 dark:text-cyan-300 dark:neon-cyan">주식 게시판</h1>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Stock Discussion Board</p>
               </div>
             </button>
 
@@ -88,7 +88,7 @@ function App() {
                 onClick={toggle}
                 aria-label="Toggle theme"
                 title={`현재 테마: ${resolvedTheme}`}
-                className="px-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-[#0b0f17] hover:bg-gray-50 dark:hover:bg-white/10 transition-colors neon-ring"
+                className="px-3 py-2 rounded-lg border-2 border-slate-300 dark:border-white/10 bg-white dark:bg-[#0b0f17] hover:bg-slate-50 dark:hover:bg-white/10 transition-colors dark:neon-ring"
               >
                 {resolvedTheme === "dark" ? "🌙" : "☀️"}
               </button>
@@ -96,7 +96,7 @@ function App() {
               <select
                 value={theme}
                 onChange={(e) => setTheme(e.target.value as any)}
-                className="hidden sm:block px-2 py-2 rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-[#0b0f17] text-sm"
+                className="hidden sm:block px-2 py-2 rounded-lg border-2 border-slate-300 dark:border-white/10 bg-white dark:bg-[#0b0f17] text-slate-900 dark:text-slate-100 text-sm font-medium"
               >
                 <option value="light">Light</option>
                 <option value="dark">Dark</option>
@@ -105,7 +105,7 @@ function App() {
 
               <button
                 onClick={() => navigate({ type: "create" })}
-                className="px-6 py-3 bg-gradient-to-br from-slate-700 to-slate-900 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-150 dark:from-pink-600 dark:to-pink-700"
+                className="px-6 py-3 bg-blue-600 dark:bg-gradient-to-br dark:from-pink-600 dark:to-pink-700 text-white font-semibold rounded-xl shadow-md hover:bg-blue-700 hover:shadow-lg transition-all duration-150"
               >
                 <span className="flex items-center gap-2">
                   <span className="text-lg">✏️</span>

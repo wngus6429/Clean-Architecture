@@ -20,19 +20,15 @@
   body {
     margin: 0;
     min-height: 100vh;
-    /* 고급 대리석 느낌의 배경 */
-    background-color: #f5f5f7;
-    background-image: radial-gradient(at 47% 33%, rgba(226, 226, 226, 0.3) 0, transparent 59%),
-      radial-gradient(at 82% 65%, rgba(255, 255, 255, 0.5) 0, transparent 55%),
-      radial-gradient(at 15% 75%, rgba(240, 240, 243, 0.4) 0, transparent 63%),
-      radial-gradient(at 60% 15%, rgba(235, 235, 238, 0.3) 0, transparent 54%),
-      linear-gradient(135deg, #fafafa 0%, #efefef 50%, #e8e8ea 100%);
-    /* fixed는 스크롤 시 높은 리페인트 비용을 유발할 수 있음 */
+    /* 라이트 모드: 깔끔하고 읽기 쉬운 단순 배경 */
+    color-scheme: light dark;
+    background-color: #f8fafc; /* slate-50 */
+    background-image: none;
     background-attachment: scroll;
   }
 
-  /* 다크모드 배경: 네온 사이버펑크 느낌(저비용) */
-  .dark body {
+  /* 다크모드 배경: 네온 사이버펑크 느낌 */
+  :root.dark body {
     background-color: #0b0f17;
     background-image: radial-gradient(1200px 600px at 10% -10%, rgba(0, 255, 255, 0.08), transparent 60%),
       radial-gradient(1000px 500px at 110% 10%, rgba(255, 0, 128, 0.08), transparent 60%),
@@ -57,14 +53,13 @@
     animation: slide-down 0.3s ease-out;
   }
 
-  /* 고급 대리석 카드 */
+  /* 라이트 모드에서 선명한 카드 */
   .glass-card {
-    background: linear-gradient(145deg, #ffffff 0%, #f8f8f8 100%);
-    /* blur 강도 축소로 스크롤 비용 완화 */
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 10px 30px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    background: #ffffff;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: 1px solid #e2e8f0; /* slate-200 */
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 4px 12px rgba(15, 23, 42, 0.06);
     border-radius: 16px;
     transition: all 0.3s ease;
   }
@@ -76,15 +71,15 @@
   }
 
   .glass-card:hover {
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06), 0 15px 40px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 1);
+    box-shadow: 0 4px 8px rgba(15, 23, 42, 0.1), 0 8px 20px rgba(15, 23, 42, 0.08);
     transform: translateY(-2px);
   }
 
-  /* 저비용 카드: backdrop-filter 제거 (폼 등에서 사용) */
+  /* 라이트 모드에서 깨끗한 종이 카드 */
   .marble-card {
-    background: linear-gradient(145deg, #ffffff 0%, #f8f8f8 100%);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 6px 18px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    background: #ffffff;
+    border: 1px solid #e2e8f0; /* slate-200 */
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 4px 12px rgba(15, 23, 42, 0.06);
     border-radius: 16px;
     transition: box-shadow 0.25s ease, transform 0.25s ease;
   }
@@ -96,7 +91,7 @@
   }
 
   .marble-card:hover {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), 0 10px 28px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 1);
+    box-shadow: 0 4px 6px rgba(15, 23, 42, 0.1), 0 8px 20px rgba(15, 23, 42, 0.08);
     transform: translateY(-1px);
   }
 

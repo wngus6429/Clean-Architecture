@@ -1,7 +1,7 @@
 // ===== DB 스키마 정의 (Drizzle ORM) =====
 // 주식 게시판 테이블 구조를 정의합니다.
 
-import { mysqlTable, serial, varchar, text, timestamp } from "drizzle-orm/mysql-core";
+import { mysqlTable, serial, varchar, text, timestamp, mysqlEnum, decimal, int } from "drizzle-orm/mysql-core";
 
 /**
  * posts 테이블
@@ -25,6 +25,20 @@ export const posts = mysqlTable("posts", {
 
   // 주식 종목명 (예: 삼성전자, 선택 사항)
   stockName: varchar("stock_name", { length: 100 }),
+
+  // 투자 의견 (bullish/neutral/bearish)
+  sentiment: mysqlEnum("sentiment", ["bullish", "neutral", "bearish"]).notNull().default("neutral"),
+
+  // 현재 포지션 (buy/hold/sell)
+  positionType: mysqlEnum("position_type", ["buy", "hold", "sell"]).notNull().default("hold"),
+
+  // 진입가 및 목표가 (선택) - 소수점 둘째 자리까지
+  entryPrice: decimal("entry_price", { precision: 12, scale: 2 }),
+  targetPrice: decimal("target_price", { precision: 12, scale: 2 }),
+
+  // 조회수 및 공감수
+  viewCount: int("view_count").notNull().default(0),
+  likeCount: int("like_count").notNull().default(0),
 
   // 생성일시 (자동 설정)
   createdAt: timestamp("created_at").defaultNow().notNull(),

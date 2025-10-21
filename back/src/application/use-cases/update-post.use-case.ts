@@ -25,13 +25,33 @@ export class UpdatePostUseCase {
       throw new Error("수정할 내용이 없습니다.");
     }
 
+    if (data.entryPrice !== undefined && data.entryPrice !== null && data.entryPrice < 0) {
+      throw new Error("진입가는 0 이상이어야 합니다.");
+    }
+
+    if (data.targetPrice !== undefined && data.targetPrice !== null && data.targetPrice < 0) {
+      throw new Error("목표가는 0 이상이어야 합니다.");
+    }
+
+    if (data.title !== undefined && data.title.trim().length === 0) {
+      throw new Error("제목은 비워둘 수 없습니다.");
+    }
+
+    if (data.content !== undefined && data.content.trim().length === 0) {
+      throw new Error("내용은 비워둘 수 없습니다.");
+    }
+
     // 데이터 정제
     const sanitizedData: UpdatePostInput = {};
     if (data.title !== undefined) sanitizedData.title = data.title.trim();
     if (data.content !== undefined) sanitizedData.content = data.content.trim();
     if (data.author !== undefined) sanitizedData.author = data.author.trim();
-    if (data.stockCode !== undefined) sanitizedData.stockCode = data.stockCode.trim() || undefined;
-    if (data.stockName !== undefined) sanitizedData.stockName = data.stockName.trim() || undefined;
+    if (data.stockCode !== undefined) sanitizedData.stockCode = data.stockCode.trim();
+    if (data.stockName !== undefined) sanitizedData.stockName = data.stockName.trim();
+    if (data.sentiment !== undefined) sanitizedData.sentiment = data.sentiment;
+    if (data.positionType !== undefined) sanitizedData.positionType = data.positionType;
+    if (data.entryPrice !== undefined) sanitizedData.entryPrice = data.entryPrice;
+    if (data.targetPrice !== undefined) sanitizedData.targetPrice = data.targetPrice;
 
     return await this.postRepository.update(id, sanitizedData);
   }

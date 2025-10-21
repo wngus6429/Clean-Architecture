@@ -27,13 +27,25 @@ export class CreatePostUseCase {
       throw new Error("작성자는 필수입니다.");
     }
 
-    // 데이터 정제 (앞뒤 공백 제거)
+    if (data.entryPrice !== undefined && data.entryPrice !== null && data.entryPrice < 0) {
+      throw new Error("진입가는 0 이상이어야 합니다.");
+    }
+
+    if (data.targetPrice !== undefined && data.targetPrice !== null && data.targetPrice < 0) {
+      throw new Error("목표가는 0 이상이어야 합니다.");
+    }
+
+    // 데이터 정제 (앞뒤 공백 제거 및 기본값 처리)
     const sanitizedData: CreatePostInput = {
       title: data.title.trim(),
       content: data.content.trim(),
       author: data.author.trim(),
       stockCode: data.stockCode?.trim() || undefined,
       stockName: data.stockName?.trim() || undefined,
+      sentiment: data.sentiment ?? "neutral",
+      positionType: data.positionType ?? "hold",
+      entryPrice: data.entryPrice ?? undefined,
+      targetPrice: data.targetPrice ?? undefined,
     };
 
     return await this.postRepository.create(sanitizedData);

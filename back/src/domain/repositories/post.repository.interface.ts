@@ -2,7 +2,20 @@
 // 데이터 접근 계약을 정의 (구현체는 Infrastructure 레이어에)
 // DDD의 핵심: 도메인은 "어떻게" 저장하는지 모르고, "무엇을" 할 수 있는지만 정의
 
-import { Post, CreatePostInput, UpdatePostInput } from "../entities/post.entity";
+import {
+  Post,
+  CreatePostInput,
+  UpdatePostInput,
+  Sentiment,
+  PositionType,
+  StockTrendSummary,
+} from "../entities/post.entity";
+
+export type PostPageFilters = {
+  sentiment?: Sentiment;
+  stockCode?: string;
+  positionType?: PositionType;
+};
 
 /**
  * PostRepository 인터페이스
@@ -20,9 +33,10 @@ export interface IPostRepository {
    * 페이지네이션 조회
    * @param offset - 시작 오프셋
    * @param limit - 가져올 개수
+   * @param filters - 필터 조건
    * @returns items와 total 개수
    */
-  findPage(offset: number, limit: number): Promise<{ items: Post[]; total: number }>;
+  findPage(offset: number, limit: number, filters?: PostPageFilters): Promise<{ items: Post[]; total: number }>;
 
   /**
    * ID로 게시글 하나 조회
@@ -45,6 +59,25 @@ export interface IPostRepository {
    * @returns 수정된 게시글 또는 null
    */
   update(id: number, data: UpdatePostInput): Promise<Post | null>;
+
+  /**
+   * 게시글 조회수 1 증가
+   * @param id - 대상 게시글
+   */
+  incrementViewCount(id: number): Promise<Post | null>;
+
+  /**
+   * 게시글 공감 수 조정 (+1 또는 -1)
+   * @param id - 대상 게시글
+   * @param delta - 증감값
+   */
+  updateLikeCount(id: number, delta: 1 | -1): Promise<Post | null>;
+
+  /**
+   * 트렌딩 종목 목록 조회
+   * @param params - 조회 옵션
+   */
+  findTrendingStocks(params: { limit: number; days: number }): Promise<StockTrendSummary[]>;
 
   /**
    * 게시글 삭제
