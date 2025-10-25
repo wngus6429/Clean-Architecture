@@ -2,7 +2,7 @@
 // 간단한 라우팅 시스템 구현 (TanStack Router 대신 수동 라우팅)
 
 import { useState, useEffect } from "react";
-import { useTheme } from "./hooks/useTheme";
+import { DarkModeToggle } from "./components/DarkModeToggle";
 import { ToastContainer } from "./components/ToastContainer";
 import PostListPage from "./pages/PostListPage.tsx";
 import PostDetailPage from "./pages/PostDetailPage.tsx";
@@ -15,7 +15,6 @@ type Page = { type: "list" } | { type: "detail"; id: number } | { type: "create"
 function App() {
   // 현재 페이지 상태
   const [currentPage, setCurrentPage] = useState<Page>({ type: "list" });
-  const { theme, resolvedTheme, toggle, setTheme } = useTheme();
 
   // URL 해시로 라우팅 처리 (새로고침 시에도 유지)
   useEffect(() => {
@@ -83,25 +82,8 @@ function App() {
             </button>
 
             <div className="flex items-center gap-3">
-              {/* 다크모드 토글 */}
-              <button
-                onClick={toggle}
-                aria-label="Toggle theme"
-                title={`현재 테마: ${resolvedTheme}`}
-                className="px-3 py-2 rounded-lg border-2 border-slate-300 dark:border-white/10 bg-white dark:bg-[#0b0f17] hover:bg-slate-50 dark:hover:bg-white/10 transition-colors dark:neon-ring"
-              >
-                {resolvedTheme === "dark" ? "🌙" : "☀️"}
-              </button>
-              {/* 선택 드롭다운 (옵션) */}
-              <select
-                value={theme}
-                onChange={(e) => setTheme(e.target.value as any)}
-                className="hidden sm:block px-2 py-2 rounded-lg border-2 border-slate-300 dark:border-white/10 bg-white dark:bg-[#0b0f17] text-slate-900 dark:text-slate-100 text-sm font-medium"
-              >
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-                <option value="system">System</option>
-              </select>
+              {/* 다크모드 토글 (네온 경량) */}
+              <DarkModeToggle />
 
               <button
                 onClick={() => navigate({ type: "create" })}

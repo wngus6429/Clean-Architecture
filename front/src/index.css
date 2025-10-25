@@ -9,6 +9,15 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    /* Neon palette (light defaults) */
+    --neon-primary: #8b5cf6; /* violet */
+    --neon-cyan: #06b6d4; /* cyan */
+    --neon-pink: #ec4899; /* pink */
+    --surface: #ffffff;
+    --paper: #f8fafc; /* slate-50 */
+    --text: #0f172a; /* slate-900 */
+    --muted: #475569; /* slate-600 */
   }
 
   * {
@@ -22,14 +31,22 @@
     min-height: 100vh;
     /* 라이트 모드: 깔끔하고 읽기 쉬운 단순 배경 */
     color-scheme: light dark;
-    background-color: #f8fafc; /* slate-50 */
+    background-color: var(--paper);
     background-image: none;
     background-attachment: scroll;
   }
 
   /* 다크모드 배경: 네온 사이버펑크 느낌 */
   :root.dark body {
-    background-color: #0b0f17;
+    --neon-primary: #8b5cf6;
+    --neon-cyan: #22d3ee;
+    --neon-pink: #ff4dac;
+    --surface: #101523;
+    --paper: #0b0f17;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+
+    background-color: var(--paper);
     background-image: radial-gradient(1200px 600px at 10% -10%, rgba(0, 255, 255, 0.08), transparent 60%),
       radial-gradient(1000px 500px at 110% 10%, rgba(255, 0, 128, 0.08), transparent 60%),
       linear-gradient(180deg, #0b0f17 0%, #0a0e16 60%, #090c12 100%);
@@ -134,8 +151,39 @@
     color: #8efcff;
   }
   .neon-pink {
-    text-shadow: 0 0 6px rgba(255, 0, 128, 0.6), 0 0 12px rgba(255, 0, 128, 0.35);
+    box-shadow: 0 0 0 1px rgba(0, 255, 255, 0.35), 0 0 12px rgba(0, 255, 255, 0.25) inset;
     color: #ff9ad6;
+
+  /* Neon toggle button (low-cost effects) */
+  .neon-toggle {
+    position: relative;
+    border-radius: 9999px;
+    transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+    border: 2px solid #e2e8f0;
+    background-color: #ffffff;
+    color: #0f172a;
+  }
+  .neon-toggle:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
+  }
+  .dark .neon-toggle {
+    border-color: rgba(255, 255, 255, 0.12);
+    background-color: rgba(16, 21, 35, 0.9);
+    color: var(--text);
+    box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.25), inset 0 0 10px rgba(139, 92, 246, 0.12);
+    backdrop-filter: blur(4px);
+  }
+  .dark .neon-toggle:hover {
+    box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.4), 0 0 14px rgba(34, 211, 238, 0.28), inset 0 0 12px rgba(139, 92, 246, 0.2);
+  }
+  .neon-toggle .icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+  .neon-toggle:hover .icon {
+    transform: rotate(180deg);
+  }
   }
   .neon-ring {
     box-shadow: 0 0 0 1px rgba(0, 255, 255, 0.35), 0 0 12px rgba(0, 255, 255, 0.25) inset;
@@ -165,5 +213,22 @@
   .content-visibility-auto {
     content-visibility: auto;
     contain-intrinsic-size: 1px 600px;
+  }
+
+  /* Scrollbar styling (light) */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: #f1f5f9; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 6px; }
+  ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+  /* Scrollbar styling (dark neon) */
+  .dark ::-webkit-scrollbar-track { background: #111827; }
+  .dark ::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, var(--neon-primary), var(--neon-cyan));
+    border-radius: 6px;
+  }
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, #7c3aed, #0891b2);
+    box-shadow: 0 0 8px rgba(139, 92, 246, 0.35);
   }
 }
